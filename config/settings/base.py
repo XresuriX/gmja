@@ -402,3 +402,7 @@ HAYSTACK_CONNECTIONS = {
         "ENGINE": "haystack.backends.simple_backend.SimpleEngine",
     },
 }
+
+
+OSCAR_SHOP_NAME = "GrandMarketJa"
+OSCAR_SHOP_TAGLINE = "We have it all"
