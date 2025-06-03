@@ -25,6 +25,7 @@ urlpatterns = [
     path("users/", include("gmja.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     path("", include(apps.get_app_config("oscar").urls[0])),
+    path("api/", include("oscarapi.urls")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files

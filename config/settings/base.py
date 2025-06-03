@@ -187,7 +187,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "oscar.apps.basket.middleware.BasketMiddleware",
+    "oscarapi.middleware.ApiBasketMiddleWare",
     "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
 ]
 
@@ -406,3 +406,4 @@ HAYSTACK_CONNECTIONS = {
 
 OSCAR_SHOP_NAME = "GrandMarketJa"
 OSCAR_SHOP_TAGLINE = "We have it all"
+OSCARAPI_BLOCK_ADMIN_API_ACCESS = True
