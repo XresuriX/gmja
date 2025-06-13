@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import App from "./newscene"
+import HtmlText from "./textbox"
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-gold-500 py-20 md:py-32">
@@ -18,8 +19,7 @@ export function HeroSection() {
         </Button>
       </div>
       <div className="absolute right-0 top-0 h-full w-1/2 md:block">
-        <App
-        />
+        <HtmlText>hi</HtmlText>
       </div>
     </section>
   )
