@@ -27,7 +27,7 @@ urlpatterns = [
     path("", include(apps.get_app_config("oscar").urls[0])),
     path("api/", include("oscarapi.urls")),
     # Your stuff: custom urls includes go here
-    # ...
+    ("^activity/", include("actstream.urls")),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
