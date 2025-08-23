@@ -1,3 +1,29 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Next.js
+.next
+out
+
+# Production
+build
+
+# Environment variables
+.env*
+!.env.example
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
 .editorconfig
 .gitattributes
 .github
@@ -7,6 +33,13 @@
 .pre-commit-config.yaml
 .readthedocs.yml
 .travis.yml
-venv
+.venv
 .git
 .envs/
+node_modules
+.oscar
+.lock
+.sock
+
+*.md
+dist
