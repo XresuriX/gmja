@@ -19,9 +19,6 @@ services:
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
-      - CORS_ALLOWED_ORIGINS=http://localhost:3000
-      - CSRF_TRUSTED_ORIGINS=http://localhost:3000
-      - DEBUG=True
     ports:
       - '8000:8000'
     command: /start

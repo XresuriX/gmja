@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -12,13 +13,17 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
-    path("home", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path(
+        "GrandmarketJa/home",
+        TemplateView.as_view(template_name="pages/home.html"),
+        name="home",
+    ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    # path("users/", include("gmja.users.urls", namespace="users")),  # noqa: ERA001
+    path("GrandmarketJa/users/", include("gmja.users.urls", namespace="users")),
     path("GrandmarketJa/accounts/", include("allauth.urls")),
-    # path("", include(apps.get_app_config("oscar").urls[0])),  # noqa: ERA001
+    path("GrandmarketJa/", include(apps.get_app_config("oscar").urls[0])),
     path("GrandmarketJa/apishop/", include("oscarapi.urls")),
     path("GrandmarketJa/activity/", include("actstream.urls")),
     # Media files
@@ -31,12 +36,12 @@ if settings.DEBUG:
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
+    path("gmja/api/", include("config.api_router")),
     # DRF auth token
-    path("api/auth-token/", obtain_auth_token, name="obtain_auth_token"),
-    path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
+    path("gmja/api/auth-token/", obtain_auth_token, name="obtain_auth_token"),
+    path("gmja/api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
-        "api/docs/",
+        "gmja/api/docs/",
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
