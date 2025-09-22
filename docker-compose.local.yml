@@ -25,16 +25,23 @@ services:
 
   nextjs: &nextjs
     build:
-      context: ./frontend
+      context: .
       dockerfile: ./compose/local/nextjs/Dockerfile
     image: gmja_local_nextjs
     container_name: gmja_local_nextjs
     volumes:
-      - .:/app:z
+      - ./app/frontend:/app:z
+      - /app/node_modules
+      - /app/.next
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://django:8000/api
+      - NEXT_PUBLIC_CSRF_COOKIE_NAME=csrftoken
+    env_file:
+      - ./.envs/.local/.nextjs
+    command: npm run dev
 
   postgres:
     build:

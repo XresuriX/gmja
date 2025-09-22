@@ -1,44 +1,59 @@
-FROM node:lts-alpine AS base
+FROM node:23-alpine AS base
 
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# Stage 1: Install dependencies
 FROM base AS deps
-WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --prod=false
+RUN apk add --no-cache libc6-compat
+# If you still run into build issue, go to "Problem #3: Making /app is read only.
+# in case you have permission issues.
+WORKDIR /app/frontend
 
-# Stage 2: Build the application
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
 FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+WORKDIR /app/frontend
+COPY --from=deps /app/frontend/node_modules ./node_modules
 COPY . .
-RUN pnpm run build
 
-# Stage 3: Production image
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_PRIVATE_STANDALONE=true
+
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
 FROM base AS runner
-WORKDIR /app
+WORKDIR /app/frontend
 
-# Create non-root user for security
+ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_PRIVATE_STANDALONE=true
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy necessary files from builder
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder /app/frontend/public ./public
 
-# Switch to non-root user
+COPY --from=builder --chown=nextjs:nodejs /app/frontend/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/frontend/.next/static ./.next/static
+
+# Ensuring no unnecessary permissions are given and add necessary permissions for it to run server.js properly.
+RUN chmod -R a-w+x . && chmod -R a+x .next node_modules
+
 USER nextjs
 
 EXPOSE 3000
+
 ENV PORT=3000
+
 ENV HOSTNAME="0.0.0.0"
-ENV NODE_ENV=production
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
-
 CMD ["node", "server.js"]
