@@ -23,6 +23,19 @@ services:
       - '8000:8000'
     command: /start
 
+  nextjs: &nextjs
+    build:
+      context: ./frontend
+      dockerfile: ./compose/local/nextjs/Dockerfile
+    image: gmja_local_nextjs
+    container_name: gmja_local_nextjs
+    volumes:
+      - .:/app:z
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+
   postgres:
     build:
       context: .

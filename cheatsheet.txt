@@ -123,3 +123,5 @@ def post_created(sender, instance, created, **kwargs):
         )
         # Activity Stream
     action.send(instance.user, verb="created a post", action_object=instance)
+
+
