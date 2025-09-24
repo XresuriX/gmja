@@ -6,18 +6,17 @@ RUN apk add --no-cache libc6-compat git python3 make g++
 WORKDIR /frontend
 
 # Copy package files from frontend directory
-COPY ./frontend/package.json ./frontend/yarn.lock* ./frontend/package-lock.json* ./frontend/pnpm-lock.yaml* ./frontend/.npmrc* ./
+COPY ./frontend/package.json ./frontend/yarn.lock* ./frontend/package-lock.json* ./
 
 # Install dependencies
 RUN \
-  if [ -f yarn.lock ]; then yarn install; \
+  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install; \
   elif [ -f package-lock.json ]; then npm install; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
 # Copy frontend source code
-COPY ./frontend/ .
+COPY ./frontend .
 
 EXPOSE 3000
 CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0"]
