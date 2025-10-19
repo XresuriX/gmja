@@ -1,0 +1,46 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Next.js
+.next
+out
+
+# Production
+build
+
+# Environment variables
+.env*
+!.env.example
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+**/node_modules/
+.git
+.dockerignore
+.editorconfig
+.gitattributes
+.github
+.gitignore
+.gitlab-ci.yml
+.idea
+.pre-commit-config.yaml
+.readthedocs.yml
+.travis.yml
+.venv
+.envs/
+.oscar
+.lock
+.sock
+
+*.md
+dist

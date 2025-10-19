@@ -3,17 +3,15 @@ FROM node:23-alpine
 # Install dependencies for development
 RUN apk add --no-cache libc6-compat git python3 make g++
 
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /frontend
 
 # Copy package files from frontend directory
-COPY ./frontend/package.json ./frontend/yarn.lock* ./frontend/package-lock.json* ./
+COPY ./frontend/package.json ./frontend/pnpm-lock.yaml* ./
 
 # Install dependencies
-RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install; \
-  elif [ -f package-lock.json ]; then npm install; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN pnpm install
 
 # Copy frontend source code
 COPY ./frontend .

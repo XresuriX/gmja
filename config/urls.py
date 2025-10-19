@@ -24,7 +24,7 @@ urlpatterns = [
     path("GrandmarketJa/users/", include("gmja.users.urls", namespace="users")),
     path("GrandmarketJa/accounts/", include("allauth.urls")),
     path("GrandmarketJa/", include(apps.get_app_config("oscar").urls[0])),
-    path("GrandmarketJa/apishop/", include("oscarapi.urls")),
+    path("GrandmarketJa/api/", include("oscarapi.urls")),
     path("GrandmarketJa/activity/", include("actstream.urls")),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

@@ -123,6 +123,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "drf_spectacular",
     "actstream",
+    "oscarapi",
 ]
 
 LOCAL_APPS = [
@@ -281,7 +282,7 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Leslie A. Taffe""", "taffe.leslie@gmail.co")]
+ADMINS = [("""Leslie A. Taffe""", "taffe.leslie@gmail.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 # https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
@@ -410,3 +411,4 @@ OSCAR_SHOP_TAGLINE = "We have it all"
 OSCAR_HOMEPAGE = "home"
 OSCARAPI_BLOCK_ADMIN_API_ACCESS = False
 # OSCAR_ACCOUNTS_REDIRECT_URL
+

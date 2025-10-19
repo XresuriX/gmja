@@ -31,7 +31,7 @@ services:
     container_name: gmja_local_nextjs
     volumes:
       - ./frontend:/app:z
-      - /frontend/node_modules
+      - /app/frontend/node_modules
       - /frontend/.next
     ports:
       - "3000:3000"

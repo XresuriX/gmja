@@ -28,3 +28,4 @@ django-oscar[sorl-thumbnail]==4.0
 django-oscar-api==3.3.0
 django-cors-headers==4.9.0
 django-notifications-hq==1.8.3
+django-activity-stream[jsonfield]==2.0.0

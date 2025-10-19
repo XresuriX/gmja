@@ -90,19 +90,6 @@ likes = models.ManyToManyField(Profile, related_name="video_like", blank=True)
 
 
 
-
-@api_controller(
-    "/Bookmarks",
-    tags=["bookmarks"],
-    permissions=[permissions.IsAuthenticatedOrReadOnly],
-)
-class PostModelController(ModelControllerBase):
-    @route.get("all/", response=list[])
-    def get_s(self):
-        return Bookmarks.objects.all()
-
-
-
 from actstream import action  # type: ignore[PGH003]
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -125,3 +112,7 @@ def post_created(sender, instance, created, **kwargs):
     action.send(instance.user, verb="created a post", action_object=instance)
 
 
+{
+        "method": "some.other.methods.CreditCard",
+        "permission": "oscarapicheckout.permissions.Public",
+    },
