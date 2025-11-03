@@ -34,4 +34,4 @@ django-extensions==4.1  # https://github.com/django-extensions/django-extensions
 django-coverage-plugin==3.2.0  # https://github.com/nedbat/django_coverage_plugin
 pytest-django==4.11.1  # https://github.com/pytest-dev/pytest-django
 django-activity-stream[jsonfield]==2.0.0
-loguru==0.7.3
+django-jsonfield-backport==1.0.5

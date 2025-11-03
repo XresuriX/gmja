@@ -3,6 +3,7 @@ python -m black {source_file_or_directory}
 source venv/Scripts/activate
 export DJANGO_SETTINGS_MODULE=src.settings.local
 pytest -vv -s
+
 python manage.py runserver --settings=src.settings.
 python manage.py tailwind start --settings=src.settings.local
 python manage.py makemigrations --settings=src.settings.test
@@ -11,6 +12,7 @@ celery beat -l info
 celery worker -l info
 rabbitmqctl status
 pip install -r requirements/local.txt
+python manage.py oscar_populate_countries
 pre-commit install
 git remote -v
 git branch -M main  # Rename your current branch to 'main'
@@ -27,6 +29,7 @@ export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES
 export CELERY_BROKER_URL="${REDIS_URL}"
 export CELERY_BROKER_URL=redis://localhost:6379/0
 
+docker compose oscar_fork_app yourproject/ yoursubpackage.order
 docker compose -f docker-compose.local.yml build
 docker compose -f docker-compose.local.yml up -d
 export COMPOSE_FILE=docker-compose.local.yml

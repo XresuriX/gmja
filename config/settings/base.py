@@ -411,4 +411,4 @@ OSCAR_SHOP_TAGLINE = "We have it all"
 OSCAR_HOMEPAGE = "home"
 OSCARAPI_BLOCK_ADMIN_API_ACCESS = False
 # OSCAR_ACCOUNTS_REDIRECT_URL
-
+#python manage.py oscar_populate_countries
