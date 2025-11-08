@@ -128,7 +128,13 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "gmja.users",
-    # Your stuff: custom apps go here
+    "gmja.ads",
+    "gmja.activities",
+    "gmja.catalogue",
+    "gmja.layaway",
+    "gmja.loyalty",
+    "",
+    "",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -280,7 +286,7 @@ EMAIL_TIMEOUT = 5
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL.
-ADMIN_URL = "admin/"
+ADMIN_URL = "GrandmarketJa/gmjadmin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [("""Leslie A. Taffe""", "taffe.leslie@gmail.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -395,7 +401,7 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Documentation of API endpoints of GrandMarketJa",
     "VERSION": "1.0.0",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
-    "SCHEMA_PATH_PREFIX": "/api/",
+    "SCHEMA_PATH_PREFIX": "/gmja-api/",
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
@@ -405,10 +411,27 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+# Session & Cookie Settings
+SESSION_COOKIE_SAMESITE = "Lax" if DEBUG else True
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SAMESITE = "Lax" if DEBUG else True
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
+
 
 OSCAR_SHOP_NAME = "GrandMarketJa"
 OSCAR_SHOP_TAGLINE = "We have it all"
-OSCAR_HOMEPAGE = "home"
+OSCAR_HOMEPAGE = "api-schema"
 OSCARAPI_BLOCK_ADMIN_API_ACCESS = False
+OSCARAPI_BASKET_MERGE_ENABLED = True
+OSCARAPI_BASKET_CREATE_AFTER_LOGIN = True
 # OSCAR_ACCOUNTS_REDIRECT_URL
 #python manage.py oscar_populate_countries

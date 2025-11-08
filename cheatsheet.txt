@@ -66,21 +66,28 @@ post_save.connect(my_handler, sender=MyModel)
     likes = models.ManyToManyField(Profile, related_name="liked_post")
     dislikes = models.ManyToManyField(Profile, related_name="disliked_post")
 """
+CHANGE_PASSWORD: '/account/password/change',
+  EMAIL: '/account/email',
+  PROVIDERS: '/account/providers',
+
+  // Account management: 2FA
+  AUTHENTICATORS: '/account/authenticators',
+  RECOVERY_CODES: '/account/authenticators/recovery-codes',
+  TOTP_AUTHENTICATOR: '/account/authenticators/totp',
 
 
+LOGIN: '/auth/login',
+  REQUEST_LOGIN_CODE: '/auth/code/request',
+  CONFIRM_LOGIN_CODE: '/auth/code/confirm',
+  SESSION: '/auth/session',
+  REAUTHENTICATE: '/auth/reauthenticate',
+  REQUEST_PASSWORD_RESET: '/auth/password/request',
+  RESET_PASSWORD: '/auth/password/reset',
+  SIGNUP: '/auth/signup',
+  VERIFY_EMAIL: '/auth/email/verify',
 
-# Add to your Docker Compose
-coturn:
-  image: coturn/coturn
-  ports:
-    - "3478:3478/udp"
-    - "3478:3478/tcp"
-  environment:
-    - TURN_USERNAME=your_username
-    - TURN_PASSWORD=your_password
-  networks:
-    - app_network
-
+// Auth: Sessions
+  SESSIONS: '/auth/sessions',
 
 
 likes = models.ManyToManyField(Profile, related_name="video_like", blank=True)
@@ -119,3 +126,5 @@ def post_created(sender, instance, created, **kwargs):
         "method": "some.other.methods.CreditCard",
         "permission": "oscarapicheckout.permissions.Public",
     },
+
+

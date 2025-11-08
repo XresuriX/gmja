@@ -23,8 +23,8 @@ urlpatterns = [
     # User management
     path("GrandmarketJa/users/", include("gmja.users.urls", namespace="users")),
     path("GrandmarketJa/accounts/", include("allauth.urls")),
-    path("GrandmarketJa/", include(apps.get_app_config("oscar").urls[0])),
-    path("GrandmarketJa/api/", include("oscarapi.urls")),
+    path("GrandmarketJa/ecom/", include(apps.get_app_config("oscar").urls[0])),
+    path("GrandmarketJa/", include("oscarapi.urls")),
     path("GrandmarketJa/activity/", include("actstream.urls")),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
@@ -36,12 +36,13 @@ if settings.DEBUG:
 # API URLS
 urlpatterns += [
     # API base url
-    path("gmja/api/", include("config.api_router")),
+    path("gmja-api/", include("config.api_router")),
+
     # DRF auth token
-    path("gmja/api/auth-token/", obtain_auth_token, name="obtain_auth_token"),
-    path("gmja/api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
+    path("/auth-token/", obtain_auth_token, name="obtain_auth_token"),
+    path("/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
-        "gmja/api/docs/",
+        "/docs/",
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
