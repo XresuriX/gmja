@@ -1,6 +1,7 @@
 # ruff: noqa: ERA001, E501
 """Base settings to build other settings files upon."""
 
+from corsheaders.defaults import default_headers
 import ssl
 from pathlib import Path
 
@@ -115,8 +116,8 @@ THIRD_PARTY_APPS = [
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
-    "allauth.mfa",
-    "allauth.socialaccount",
+    "allauth.headless",
+    "allauth.usersessions",
     "django_celery_beat",
     "rest_framework",
     "rest_framework.authtoken",
@@ -378,6 +379,11 @@ ACCOUNT_FORMS = {"signup": "gmja.users.forms.UserSignupForm"}
 SOCIALACCOUNT_ADAPTER = "gmja.users.adapters.SocialAccountAdapter"
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
 SOCIALACCOUNT_FORMS = {"signup": "gmja.users.forms.UserSocialSignupForm"}
+HEADLESS_FRONTEND_URLS = {
+    "account_confirm_email": "https://app.project.org/account/verify-email/{key}",
+    "account_reset_password_from_key": "https://app.org/account/password/reset/key/{key}",
+    "account_signup": "https://app.org/account/signup",
+}
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
@@ -425,6 +431,12 @@ CSRF_COOKIE_SAMESITE = "Lax" if DEBUG else True
 CSRF_COOKIE_SECURE = not DEBUG
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
+CORS_ALLOW_HEADERS = (
+    *default_headers,
+    "x-session-token",
+    "x-email-verification-key",
+    "x-password-reset-key",
+)
 
 
 OSCAR_SHOP_NAME = "GrandMarketJa"

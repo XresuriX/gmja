@@ -37,12 +37,14 @@ if settings.DEBUG:
 urlpatterns += [
     # API base url
     path("gmja-api/", include("config.api_router")),
+    #Allauth urls
+    path("allauth/", include("allauth.headless.urls")),
 
     # DRF auth token
-    path("/auth-token/", obtain_auth_token, name="obtain_auth_token"),
-    path("/schema/", SpectacularAPIView.as_view(), name="api-schema"),
+    path("auth-token/", obtain_auth_token, name="obtain_auth_token"),
+    path("schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
-        "/docs/",
+        "docs/",
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
